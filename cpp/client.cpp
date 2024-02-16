@@ -18,7 +18,7 @@ int main()
     }
 
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(8080);
+    serv_addr.sin_port = htons(65432);
 
     // Convert IPv4 and IPv6 addresses from text to binary form
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0)
@@ -44,6 +44,7 @@ int main()
             break;
         }
 
+        message += "\n";
         send(sock, message.c_str(), message.length(), 0);
         valread = read(sock, buffer, 1024);
         std::cout << "Server: " << buffer << std::endl;

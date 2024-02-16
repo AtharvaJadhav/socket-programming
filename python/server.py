@@ -1,8 +1,5 @@
-# server.py
-from session_handler import SessionHandler
 import threading
 import socket
-from message_processor import MessageProcessor
 import sys
 import os
 
@@ -19,7 +16,6 @@ class Server:
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.setsockopt(
             socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.session_handler = SessionHandler()
 
     def start_server(self):
         self.server_socket.bind((self.host, self.port))
@@ -38,22 +34,16 @@ class Server:
             self.server_socket.close()
 
     def handle_client(self, client_socket):
-        self.session_handler.add_session(client_socket)
         try:
             while True:
-                message_bytes = client_socket.recv(1024)
-                if message_bytes:
-                    message = MessageProcessor.decode_message(message_bytes)
+                message = client_socket.recv(1024).decode('utf-8')
+                if message:
                     print(f"Received message: {message}")
-                    # Here, you can add logic to respond to messages
-                    response_data = {"response": "Message received"}
-                    response_bytes = MessageProcessor.encode_message(
-                        response_data)
-                    client_socket.sendall(response_bytes)
+                    response = "Message received\n"
+                    client_socket.sendall(response.encode('utf-8'))
                 else:
                     break
         finally:
-            self.session_handler.remove_session(client_socket)
             client_socket.close()
 
 
