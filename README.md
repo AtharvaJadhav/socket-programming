@@ -71,7 +71,7 @@ java Client
 
 ## Inter-Language Communication
 
-As of now, the examples provided focus on communication between a client and server written in the same programming language. Inter-language communication, i.e., a client written in one language communicating with a server written in another, has not yet been achieved in this repository. This functionality may be explored in future updates, considering the universal nature of TCP/IP protocols that allow for such interoperability.
+Inter-language communication, i.e., a client written in one language communicating with a server written in another, is now supported in this repository. This functionality leverages the universal nature of TCP/IP protocols that allow for such interoperability.
 
 ## Conclusion
 
